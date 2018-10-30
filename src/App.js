@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+
+import store from './store/store'
 import './App.css'
 
 import Grid from './Grid'
 
-class App extends Component {
+export default class extends Component {
   render() {
-    return <Grid />
+    return (
+      <Provider store={store}>
+        <Grid />
+      </Provider>
+    )
   }
 }
-
-export default App

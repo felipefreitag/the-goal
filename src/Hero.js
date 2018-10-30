@@ -34,7 +34,7 @@ export default withStyles(styles)(props => {
           The Goal
         </Typography>
         <Typography variant="h6" align="center" color="textSecondary" paragraph>
-          Dependency and variance kill productivity, take a look!
+          Dependency and variance kill productivity
         </Typography>
         <div className={classes.heroButtons}>
           <Grid container spacing={16} justify="center">
