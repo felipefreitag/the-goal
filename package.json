@@ -3,11 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.3.2",
+    "@material-ui/icons": "^3.0.1",
+    "eslint-config-universe": "^1.0.7",
+    "prettier": "^1.14.3",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.1.0"
+    "react-lottie": "^1.2.3",
+    "react-scripts": "2.1.0",
+    "react-test-renderer": "^16.6.0"
   },
   "scripts": {
+    "lint": "node_modules/.bin/eslint --max-warnings 0 .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
