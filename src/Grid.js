@@ -66,20 +66,29 @@ export default withStyles(styles)(
 
     deliver(id) {
       const { cards } = this.state
+      let delivered
+
       const newCards = map(cards, (card, index) => {
-        if (card.id !== id) {
-          return card
+        if (card.id === id) {
+          const { received } = card
+          const produced = random(1, 6)
+          delivered = produced > received ? received : produced
+
+          return {
+            ...card,
+            delivered,
+            inventory: received - delivered,
+          }
         }
 
-        const { received } = card
-        const produced = random(1, 6)
-        const delivered = produced > received ? received : produced
-
-        return {
-          ...card,
-          delivered,
-          inventory: received - delivered,
+        if (card.id === id + 1) {
+          return {
+            ...card,
+            received: delivered,
+          }
         }
+
+        return card
       })
       this.setState({ cards: newCards })
     }
