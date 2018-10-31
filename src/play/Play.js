@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
-import random from 'lodash/random'
+import last from 'lodash/last'
 
+import Hero from './Hero'
 import Card from './Card'
 
 import * as actions from './actions'
@@ -33,34 +34,67 @@ export default connect(
 )(
   withStyles(styles)(
     class extends Component {
-      componentDidMount() {
-        this.props.actions.receive({ id: 1, value: random(1, 6) })
+      componentDidUpdate(prevProps) {
+        const { cards, actions } = this.props
+        const { cards: prevCards } = prevProps
+        if (last(cards).delivered > 0 && last(prevCards).delivered === 0) {
+          actions.setResult()
+        }
       }
 
       render() {
-        const { classes, cards } = this.props
+        const { classes, cards, goal, inventory, actions } = this.props
 
         return (
-          <div className={classNames(classes.layout, classes.cardGrid)}>
-            <Grid container spacing={40}>
-              {cards.map(card => (
-                <Card
-                  key={card.id}
-                  card={card}
-                  onClick={() => this.props.actions.deliver({ id: card.id })}
-                />
-              ))}
-            </Grid>
-            <Typography
-              variant="h6"
-              align="center"
-              color="textSecondary"
-              paragraph
-              style={{ marginTop: 50 }}
-            >
-              Current output: {cards[3].delivered}
-            </Typography>
-          </div>
+          <Fragment>
+            <Hero actions={actions} />
+            <div className={classNames(classes.layout, classes.cardGrid)}>
+              <Grid container spacing={40}>
+                {cards.map(card => (
+                  <Card
+                    key={card.id}
+                    card={card}
+                    onClick={() => actions.deliver({ id: card.id })}
+                  />
+                ))}
+              </Grid>
+              <Grid container>
+                <Grid item md={4}>
+                  <Typography
+                    variant="h6"
+                    align="center"
+                    color="textSecondary"
+                    paragraph
+                    style={{ marginTop: 50 }}
+                  >
+                    Goal: {goal}
+                  </Typography>
+                </Grid>
+                <Grid item md={4}>
+                  <Typography
+                    variant="h6"
+                    align="center"
+                    color="textSecondary"
+                    paragraph
+                    style={{ marginTop: 50 }}
+                  >
+                    Current output: {last(cards).delivered}
+                  </Typography>
+                </Grid>
+                <Grid item md={4}>
+                  <Typography
+                    variant="h6"
+                    align="center"
+                    color="textSecondary"
+                    paragraph
+                    style={{ marginTop: 50 }}
+                  >
+                    Inventory: {inventory}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </div>
+          </Fragment>
         )
       }
     },
