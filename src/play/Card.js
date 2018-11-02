@@ -28,7 +28,7 @@ export default withStyles(styles)(
       const currentAmount = delivered ? inventory : received + inventory
 
       return (
-        <Grid item sm={6} md={4} lg={3}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <Card className={classes.card}>
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom variant="h5" component="h2">
