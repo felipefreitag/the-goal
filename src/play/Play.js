@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import last from 'lodash/last'
 
 import Hero from './Hero'
 import Card from './Card'
+import Result from './Result'
 
 import * as actions from './actions'
 
@@ -58,41 +58,11 @@ export default connect(
                   />
                 ))}
               </Grid>
-              <Grid container>
-                <Grid item md={4}>
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    color="textSecondary"
-                    paragraph
-                    style={{ marginTop: 50 }}
-                  >
-                    Goal: {goal}
-                  </Typography>
-                </Grid>
-                <Grid item md={4}>
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    color="textSecondary"
-                    paragraph
-                    style={{ marginTop: 50 }}
-                  >
-                    Current output: {last(cards).delivered}
-                  </Typography>
-                </Grid>
-                <Grid item md={4}>
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    color="textSecondary"
-                    paragraph
-                    style={{ marginTop: 50 }}
-                  >
-                    Inventory: {inventory}
-                  </Typography>
-                </Grid>
-              </Grid>
+              <Result
+                goal={goal}
+                output={last(cards).delivered}
+                inventory={inventory}
+              />
             </div>
           </Fragment>
         )
