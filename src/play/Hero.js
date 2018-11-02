@@ -38,10 +38,10 @@ export default withStyles(styles)(props => {
           The Goal
         </Typography>
         <Typography variant="h6" align="center" color="textSecondary" paragraph>
-          Start with 1 - 6 pieces in stage 1. Each stage rolls a D6 and moves
-          that many pieces forward. A stage can't move more pieces than it
+          Start with 1 - 6 coins in stage 1. Each stage rolls a D6 and moves
+          that many coins forward. A stage can't move more coins than it
           currently has. Your goal is to get an output equal to or higher than
-          your average stage capacity: 3.5.
+          your average stage capacity: 3.5. Good luck!
         </Typography>
         <div className={classes.heroButtons}>
           <Grid container spacing={16} justify="center">

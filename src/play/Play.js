@@ -10,7 +10,6 @@ import omit from 'lodash/omit'
 import Hero from './Hero'
 import Card from './Card'
 import RoundResult from './RoundResult'
-import Total from './Total'
 
 import * as actions from './actions'
 
@@ -62,7 +61,6 @@ export default connect(
                 ))}
               </Grid>
               <RoundResult {...this.props} />
-              <Total {...this.props} />
             </div>
           </Fragment>
         )

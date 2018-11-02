@@ -15,17 +15,12 @@ const card4 = { ...card, id: 4 }
 const sumInventory = cards =>
   reduce(cards, (sum, card) => sum + card.inventory, 0)
 
-const roundStartState = {
+const initialState = {
   cards: [card1, card2, card3, card4],
   output: 0,
   goal: 0,
   inventory: 0,
-}
-
-const initialState = {
-  ...roundStartState,
   totalOutput: 0,
-  totalInventory: 0,
   roundNumber: 1,
 }
 
@@ -36,14 +31,20 @@ const reducers = {
     goal: action.goal,
   }),
   NEXT_ROUND: (state, action) => ({
-    ...roundStartState,
-    totalOutput: state.totalOutput + state.output,
-    totalInventory: state.totalInventory + state.inventory,
+    ...state,
+    cards: map(state.cards, card => ({
+      ...card,
+      received: 0,
+      delivered: 0,
+    })),
+    output: 0,
+    goal: 0,
     roundNumber: state.roundNumber + 1,
   }),
   SET_RESULT: (state, action) => ({
     ...state,
     output: last(state.cards).delivered,
+    totalOutput: state.totalOutput + last(state.cards).delivered,
   }),
   RECEIVE: (state, action) => {
     const newCards = map(state.cards, (card, index) => {
@@ -64,14 +65,16 @@ const reducers = {
     let delivered
     const newCards = map(state.cards, (card, index) => {
       if (card.id === action.id) {
-        const { received } = card
+        const { received, inventory } = card
+        const available = received + inventory
         const produced = random(1, 6)
-        delivered = produced > received ? received : produced
+
+        delivered = produced > available ? available : produced
 
         return {
           ...card,
           delivered,
-          inventory: received - delivered,
+          inventory: inventory + received - delivered,
         }
       }
       if (card.id === action.id + 1) {
