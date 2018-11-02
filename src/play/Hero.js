@@ -23,7 +23,7 @@ const styles = theme => ({
 })
 
 export default withStyles(styles)(props => {
-  const { classes, actions } = props
+  const { classes, actions, output, roundNumber } = props
 
   return (
     <div className={classes.heroUnit}>
@@ -46,17 +46,33 @@ export default withStyles(styles)(props => {
         <div className={classes.heroButtons}>
           <Grid container spacing={16} justify="center">
             <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  actions.reset()
-                  actions.setGoal((LOWER_BOUND + UPPER_BOUND) / 2)
-                  actions.receive({ id: 1, value: rollDice() })
-                }}
-              >
-                Play the game
-              </Button>
+              {output ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    const { nextRound, setGoal, receive } = actions
+                    nextRound()
+                    setGoal(((LOWER_BOUND + UPPER_BOUND) / 2) * roundNumber)
+                    receive({ id: 1, value: rollDice() })
+                  }}
+                >
+                  Next round
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    const { reset, setGoal, receive } = actions
+                    reset()
+                    setGoal(((LOWER_BOUND + UPPER_BOUND) / 2) * roundNumber)
+                    receive({ id: 1, value: rollDice() })
+                  }}
+                >
+                  Play the game
+                </Button>
+              )}
             </Grid>
             <Grid item>
               <Button

@@ -15,11 +15,18 @@ const card4 = { ...card, id: 4 }
 const sumInventory = cards =>
   reduce(cards, (sum, card) => sum + card.inventory, 0)
 
-const initialState = {
+const roundStartState = {
   cards: [card1, card2, card3, card4],
   output: 0,
   goal: 0,
   inventory: 0,
+}
+
+const initialState = {
+  ...roundStartState,
+  totalOutput: 0,
+  totalInventory: 0,
+  roundNumber: 1,
 }
 
 const reducers = {
@@ -27,6 +34,12 @@ const reducers = {
   SET_GOAL: (state, action) => ({
     ...state,
     goal: action.goal,
+  }),
+  NEXT_ROUND: (state, action) => ({
+    ...roundStartState,
+    totalOutput: state.totalOutput + state.output,
+    totalInventory: state.totalInventory + state.inventory,
+    roundNumber: state.roundNumber + 1,
   }),
   SET_RESULT: (state, action) => ({
     ...state,

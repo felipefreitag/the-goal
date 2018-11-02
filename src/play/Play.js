@@ -5,10 +5,12 @@ import classNames from 'classnames'
 import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/core/styles'
 import last from 'lodash/last'
+import omit from 'lodash/omit'
 
 import Hero from './Hero'
 import Card from './Card'
-import Result from './Result'
+import RoundResult from './RoundResult'
+import Total from './Total'
 
 import * as actions from './actions'
 
@@ -43,11 +45,12 @@ export default connect(
       }
 
       render() {
-        const { classes, cards, goal, inventory, actions } = this.props
+        const { classes, cards, actions } = this.props
+        const heroProps = omit(this.props, ['classes'])
 
         return (
           <Fragment>
-            <Hero actions={actions} />
+            <Hero {...heroProps} />
             <div className={classNames(classes.layout, classes.cardGrid)}>
               <Grid container spacing={40}>
                 {cards.map(card => (
@@ -58,11 +61,8 @@ export default connect(
                   />
                 ))}
               </Grid>
-              <Result
-                goal={goal}
-                output={last(cards).delivered}
-                inventory={inventory}
-              />
+              <RoundResult {...this.props} />
+              <Total {...this.props} />
             </div>
           </Fragment>
         )

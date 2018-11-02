@@ -16,3 +16,5 @@ export const deliver = item => ({
 })
 
 export const setResult = () => ({ type: '@play/SET_RESULT' })
+
+export const nextRound = () => ({ type: '@play/NEXT_ROUND' })
